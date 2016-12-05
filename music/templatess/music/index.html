@@ -1,0 +1,31 @@
+<a href = "{% url 'music:album-add' %}"> ADD </a>
+
+{% if all_albums %}
+
+<ul>
+	{% for album in all_albums %}
+
+	<li>
+		<img src="{{ album.album_logo.url }}"> 
+		<br>
+		<a href="{% url 'music:detail' album.id%}"> {{album.album_title}} </a>
+	</li>
+
+	<a href="{% url 'music:album-update' album.id %}"> EDIT </a>
+	<form action="{% url 'music:album-delete' album.id %}" method = "post">
+		{% csrf_token %}
+		<input type="hidden" name="album_id" value="{{ album.id }}">
+		<button type="submit">
+			<span>DELETE</span>
+		</button>
+	</form>
+	{% endfor %}
+
+
+</ul>
+
+{% else %}
+	<h3> You dont have any albums </h3>
+{% endif %}
+
+
